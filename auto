@@ -2,13 +2,6 @@
 
 message=$1
 
-npm test
-status=$?
-if [ "$status" != 0 ]; then 
-  echo -e "Erro no test"
-  exit $status
-fi
-
 npm run lint 
 status=$?
 if [ "$status" != 0 ]; then 
@@ -16,14 +9,23 @@ if [ "$status" != 0 ]; then
   exit $status
 fi
 
-vercel --prod
+npm test
 status=$?
 if [ "$status" != 0 ]; then 
-  echo -e "Erro no build"
+  echo -e "Erro no test"
   exit $status
 fi
 
-# git add .
-# git commit -m "$message"
-# git push
+
+
+# vercel --prod
+# status=$?
+# if [ "$status" != 0 ]; then 
+#   echo -e "Erro no build"
+#   exit $status
+# fi
+
+git add .
+git commit -m "$message"
+git push
 

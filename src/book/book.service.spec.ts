@@ -13,12 +13,12 @@ describe('BookService', () => {
     service = module.get<BookService>(BookService);
   });
 
-  it('find all', async() => {
-    const res = await service.findAll()
+  it('find all', async () => {
+    const res = await service.findAll();
 
-    res.forEach( book => {
-      expect(book).toHaveProperty('id')
-      expect(book).toHaveProperty('name')
-    })
+    res.forEach((book) => {
+      expect(book).toHaveProperty('id');
+      expect(book).toHaveProperty('name');
+    });
   });
 });
