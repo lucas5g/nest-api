@@ -1,11 +1,10 @@
-import { Controller, Get, Post, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Delete } from '@nestjs/common';
 import { WordService } from './word.service';
 
 @Controller('words')
 export class WordController {
   constructor(private readonly wordService: WordService) {}
 
-  @Post()
   @Get()
   findAll() {
     return this.wordService.findAll();
