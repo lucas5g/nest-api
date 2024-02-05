@@ -23,4 +23,13 @@ describe('WordService', () => {
       expect(row).toHaveProperty('fixed');
     });
   });
+
+  it('find one', async () => {
+    const res = await service.findOne(1);
+
+    expect(res).toHaveProperty('name');
+    expect(res).toHaveProperty('meaning');
+    expect(res).toHaveProperty('book');
+    expect(res).toHaveProperty('fixed');
+  });
 });

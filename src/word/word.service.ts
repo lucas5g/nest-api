@@ -14,7 +14,9 @@ export class WordService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} word`;
+    return this.prisma.word.findFirstOrThrow({
+      where: { id },
+    });
   }
 
   remove(id: number) {
