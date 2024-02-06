@@ -1,5 +1,6 @@
-import { Controller, Get, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Delete, Patch } from '@nestjs/common';
 import { WordService } from './word.service';
+import { UpdateWordDto } from './dto/update-word.dto';
 
 @Controller('words')
 export class WordController {
@@ -13,6 +14,11 @@ export class WordController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.wordService.findOne(+id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, updateWordDto: UpdateWordDto) {
+    return this.wordService.update(+id, updateWordDto);
   }
 
   @Delete(':id')

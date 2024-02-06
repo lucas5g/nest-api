@@ -32,4 +32,10 @@ describe('WordService', () => {
     expect(res).toHaveProperty('book');
     expect(res).toHaveProperty('fixed');
   });
+
+  it('update', async () => {
+    const res = await service.update(1, { fixed: true });
+
+    expect(res.fixed).toEqual(true);
+  });
 });

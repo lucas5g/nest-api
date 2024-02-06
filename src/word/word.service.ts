@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { UpdateWordDto } from './dto/update-word.dto';
 
 @Injectable()
 export class WordService {
@@ -16,6 +17,13 @@ export class WordService {
   findOne(id: number) {
     return this.prisma.word.findFirstOrThrow({
       where: { id },
+    });
+  }
+
+  update(id: number, updateWordDto: UpdateWordDto) {
+    return this.prisma.word.update({
+      where: { id },
+      data: updateWordDto,
     });
   }
 
