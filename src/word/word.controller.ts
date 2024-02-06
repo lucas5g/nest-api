@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Delete, Patch } from '@nestjs/common';
+import { Controller, Get, Param, Delete, Patch, Body } from '@nestjs/common';
 import { WordService } from './word.service';
 import { UpdateWordDto } from './dto/update-word.dto';
 
@@ -17,7 +17,7 @@ export class WordController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, updateWordDto: UpdateWordDto) {
+  update(@Param('id') id: string, @Body() updateWordDto: UpdateWordDto) {
     return this.wordService.update(+id, updateWordDto);
   }
 
