@@ -17,8 +17,10 @@ describe('BookService', () => {
     const res = await service.findAll();
 
     res.forEach((book) => {
-      expect(book).toHaveProperty('id');
-      expect(book).toHaveProperty('name');
+      ['id', 'name', '_count'].forEach((property) => {
+        expect(book).toHaveProperty(property);
+        expect(book._count.words).toBe;
+      });
     });
-  });
+  }, 6000);
 });

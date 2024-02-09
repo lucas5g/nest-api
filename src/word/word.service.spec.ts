@@ -17,20 +17,17 @@ describe('WordService', () => {
     const res = await service.findAll();
 
     res.forEach((row) => {
-      expect(row).toHaveProperty('name');
-      expect(row).toHaveProperty('meaning');
-      expect(row).toHaveProperty('book');
-      expect(row).toHaveProperty('fixed');
+      ['name', 'meaning', 'bookId', 'fixed'].forEach((property) => {
+        expect(row).toHaveProperty(property);
+      });
     });
   });
 
   it('find one', async () => {
     const res = await service.findOne(1);
-
-    expect(res).toHaveProperty('name');
-    expect(res).toHaveProperty('meaning');
-    expect(res).toHaveProperty('book');
-    expect(res).toHaveProperty('fixed');
+    ['name', 'meaning', 'bookId', 'fixed'].forEach((property) => {
+      expect(res).toHaveProperty(property);
+    });
   });
 
   it('update', async () => {

@@ -8,7 +8,7 @@ export class CreateWordDto {
   meaning: string;
 
   @IsNotEmpty()
-  book: string;
+  bookId: number;
 
   @IsBoolean()
   fixed: boolean;

@@ -11,8 +11,19 @@ model Word {
   id        Int      @id @default(autoincrement())
   name      String   @unique
   meaning   String
-  book      String?
   fixed     Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  book   Book @relation(fields: [bookId], references: [id])
+  bookId Int
+}
+
+model Book {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  words Word[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }
