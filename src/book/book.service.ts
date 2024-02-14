@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { CreateBookDto } from 'src/book/dto/create-book.dto';
 
 @Injectable()
 export class BookService {
@@ -10,6 +11,18 @@ export class BookService {
       include: {
         _count: true,
       },
+    });
+  }
+
+  create(createBookDto: CreateBookDto) {
+    return this.prisma.book.create({
+      data: createBookDto,
+    });
+  }
+
+  remove(id: number) {
+    return this.prisma.book.delete({
+      where: { id },
     });
   }
 }

@@ -23,4 +23,14 @@ describe('BookService', () => {
       });
     });
   }, 6000);
+
+  it('create', async () => {
+    const res = await service.create({
+      name: 'book test',
+    });
+
+    expect(res).toBe;
+
+    await service.remove(res.id);
+  });
 });
