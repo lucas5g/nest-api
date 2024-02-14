@@ -35,4 +35,18 @@ describe('WordService', () => {
 
     expect(res.fixed).toEqual(true);
   });
+
+  it('create', async () => {
+    const payload = {
+      bookId: 1,
+      fixed: false,
+      meaning: 'significado test',
+      name: 'test',
+    };
+    const res = await service.create(payload);
+
+    expect(res).toMatchObject(payload);
+
+    await service.remove(res.id);
+  });
 });

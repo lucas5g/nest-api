@@ -1,10 +1,24 @@
-import { Controller, Get, Param, Delete, Patch, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Delete,
+  Patch,
+  Body,
+  Post,
+} from '@nestjs/common';
 import { WordService } from './word.service';
 import { UpdateWordDto } from './dto/update-word.dto';
+import { CreateWordDto } from 'src/word/dto/create-word.dto';
 
 @Controller('words')
 export class WordController {
   constructor(private readonly wordService: WordService) {}
+
+  @Post()
+  create(@Body() createWordDto: CreateWordDto) {
+    return this.wordService.create(createWordDto);
+  }
 
   @Get()
   findAll() {
