@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpdateWordDto } from './dto/update-word.dto';
 import { CreateWordDto } from 'src/word/dto/create-word.dto';
@@ -7,7 +7,19 @@ import { CreateWordDto } from 'src/word/dto/create-word.dto';
 export class WordService {
   constructor(private prisma: PrismaService) {}
 
-  create(createWordDto: CreateWordDto) {
+  async create(createWordDto: CreateWordDto) {
+    const wordExist = await this.prisma.word.count({
+      where: {
+        name: createWordDto.name,
+      },
+    });
+
+    // console.log(wordExist == true )
+
+    if (wordExist > 0) {
+      throw new BadRequestException(`Palavra ${createWordDto.name} já existe.`);
+    }
+
     return this.prisma.word.create({
       data: createWordDto,
     });

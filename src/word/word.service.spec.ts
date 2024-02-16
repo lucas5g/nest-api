@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { WordService } from './word.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { CreateWordDto } from './dto/create-word.dto';
 
 describe('WordService', () => {
   let service: WordService;
@@ -46,6 +47,21 @@ describe('WordService', () => {
     const res = await service.create(payload);
 
     expect(res).toMatchObject(payload);
+
+    await service.remove(res.id);
+  });
+
+  it('create word that already exists', async () => {
+    const payload: CreateWordDto = {
+      bookId: 1,
+      fixed: false,
+      meaning: 'test',
+      name: 'test',
+    };
+
+    const res = await service.create(payload);
+
+    await expect(service.create(payload)).rejects.toThrow('já existe.');
 
     await service.remove(res.id);
   });
