@@ -14,8 +14,6 @@ export class WordService {
       },
     });
 
-    // console.log(wordExist == true )
-
     if (wordExist > 0) {
       throw new BadRequestException(`Palavra ${createWordDto.name} já existe.`);
     }
@@ -25,11 +23,15 @@ export class WordService {
     });
   }
 
-  findAll() {
-    return this.prisma.word.findMany({
+  async findAll() {
+
+    const count = await this.prisma.word.count()
+    // console.log(count)
+    return  await this.prisma.word.findMany({
       orderBy: {
         name: 'asc',
       },
+      take: 200
     });
   }
 

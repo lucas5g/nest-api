@@ -1,12 +1,26 @@
 import { PrismaClient } from '@prisma/client';
 import { books, words } from './data';
+import { faker } from '@faker-js/faker'
 const prisma = new PrismaClient();
 
 async function main() {
 
-  for(const book of books){
+  for (let i = 1; i < 100_000; i++) {
+    await prisma.word.create({
+      data: {
+        name: faker.lorem.word() + new Date().valueOf(),
+        meaning: faker.lorem.words(),
+        bookId: 1,
+        fixed: false
+      }
+    })
+  }
+
+  return
+
+  for (const book of books) {
     await prisma.book.upsert({
-      where:{name: book.name},
+      where: { name: book.name },
       create: book,
       update: book
     })
