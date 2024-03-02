@@ -5,18 +5,18 @@ const prisma = new PrismaClient();
 
 async function main() {
 
-  for (let i = 1; i < 100_000; i++) {
-    await prisma.word.create({
-      data: {
-        name: faker.lorem.word() + new Date().valueOf(),
-        meaning: faker.lorem.words(),
-        bookId: 1,
-        fixed: false
-      }
-    })
-  }
+  // for (let i = 1; i < 100_000; i++) {
+  //   await prisma.word.create({
+  //     data: {
+  //       name: faker.lorem.word() + new Date().valueOf(),
+  //       meaning: faker.lorem.words(),
+  //       bookId: 1,
+  //       fixed: false
+  //     }
+  //   })
+  // }
 
-  return
+  // return
 
   for (const book of books) {
     await prisma.book.upsert({

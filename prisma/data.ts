@@ -811,6 +811,11 @@ export const words = [
 
 export const books = [
   {
+    id: 1,
     name: 'Aldous Huxley - Admirável mundo novo'
+  },
+  {
+    id: 2,
+    name: 'Isaac Asimov - As cavernas de aço'
   }
 ]

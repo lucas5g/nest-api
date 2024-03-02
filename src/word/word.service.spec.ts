@@ -5,50 +5,76 @@ import { CreateWordDto } from './dto/create-word.dto';
 
 describe('WordService', () => {
   let service: WordService;
+  let id: number;
 
-  beforeEach(async () => {
+  const properties = [
+    'id',
+    'name',
+    'meaning',
+    'fixed',
+    'createdAt',
+    'updatedAt',
+    'bookId',
+  ];
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [WordService, PrismaService],
     }).compile();
 
     service = module.get<WordService>(WordService);
+
+    const data: CreateWordDto = {
+      bookId: 2,
+      fixed: false,
+      meaning: 'test meaning',
+      name: 'test-word',
+    };
+
+    const word = await service.create(data);
+    id = word.id;
+  });
+
+  afterAll(async () => {
+    await service.remove(id);
   });
 
   it('find all', async () => {
-    const res = await service.findAll();
+    const { count, words } = await service.findAll({});
 
-    res.forEach((row) => {
-      ['name', 'meaning', 'bookId', 'fixed'].forEach((property) => {
-        expect(row).toHaveProperty(property);
-      });
+    expect(count).not.toBeNaN();
+    words.forEach((word) => {
+      expect(Object.keys(word)).toEqual(properties);
+    });
+  });
+
+  it('find by name', async () => {
+    const { words } = await service.findAll({ name: 'sub' });
+
+    expect(words.length).toBeLessThanOrEqual(100);
+
+    words.forEach((word) => {
+      expect(word.name).toContain('sub');
+    });
+  });
+
+  it('find by book', async () => {
+    const { words } = await service.findAll({ bookId: 2 });
+
+    words.forEach((word) => {
+      expect(word.bookId).toEqual(2);
     });
   });
 
   it('find one', async () => {
-    const res = await service.findOne(1);
-    ['name', 'meaning', 'bookId', 'fixed'].forEach((property) => {
-      expect(res).toHaveProperty(property);
-    });
+    const res = await service.findOne(id);
+    expect(Object.keys(res)).toEqual(properties);
+    expect(res.id).toEqual(id);
   });
 
   it('update', async () => {
-    const res = await service.update(1, { fixed: true });
+    const res = await service.update(id, { fixed: true });
 
     expect(res.fixed).toEqual(true);
-  });
-
-  it('create', async () => {
-    const payload = {
-      bookId: 1,
-      fixed: false,
-      meaning: 'significado test',
-      name: 'test',
-    };
-    const res = await service.create(payload);
-
-    expect(res).toMatchObject(payload);
-
-    await service.remove(res.id);
   });
 
   it('create word that already exists', async () => {

@@ -2,6 +2,8 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpdateWordDto } from './dto/update-word.dto';
 import { CreateWordDto } from 'src/word/dto/create-word.dto';
+import { FindWordDto } from 'src/word/dto/find-word.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class WordService {
@@ -23,16 +25,26 @@ export class WordService {
     });
   }
 
-  async findAll() {
-
-    const count = await this.prisma.word.count()
-    // console.log(count)
-    return  await this.prisma.word.findMany({
-      orderBy: {
-        name: 'asc',
+  async findAll(findWordDto: FindWordDto) {
+    const where: Prisma.WordWhereInput = {
+      ...findWordDto,
+      name: {
+        contains: findWordDto.name,
       },
-      take: 200
-    });
+    };
+
+    const [count, words] = await this.prisma.$transaction([
+      this.prisma.word.count({ where }),
+      this.prisma.word.findMany({
+        where,
+        orderBy: {
+          name: 'asc',
+        },
+        take: 100,
+      }),
+    ]);
+
+    return { count, words };
   }
 
   findOne(id: number) {

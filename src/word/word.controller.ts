@@ -6,10 +6,12 @@ import {
   Patch,
   Body,
   Post,
+  Query,
 } from '@nestjs/common';
 import { WordService } from './word.service';
 import { UpdateWordDto } from './dto/update-word.dto';
 import { CreateWordDto } from 'src/word/dto/create-word.dto';
+import { FindWordDto } from 'src/word/dto/find-word.dto';
 
 @Controller('words')
 export class WordController {
@@ -21,8 +23,8 @@ export class WordController {
   }
 
   @Get()
-  findAll() {
-    return this.wordService.findAll();
+  findAll(@Query() findWordDto: FindWordDto) {
+    return this.wordService.findAll(findWordDto);
   }
 
   @Get(':id')
