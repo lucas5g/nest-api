@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { CreateFiiDto } from './dto/create-fii.dto';
 import { UpdateFiiDto } from './dto/update-fii.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class FiiService {
+  constructor(private prisma: PrismaService){}
   create(createFiiDto: CreateFiiDto) {
-    return 'This action adds a new fii';
+    return this.prisma.fii.create({
+      data: createFiiDto
+    });
   }
 
   findAll() {
