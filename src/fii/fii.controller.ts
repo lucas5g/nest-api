@@ -29,6 +29,6 @@ export class FiiController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.fiiService.remove(+id);
+    return this.fiiService.remove(id);
   }
 }

@@ -13,7 +13,7 @@ export class FiiService {
   }
 
   findAll() {
-    return `This action returns all fii`;
+    return this.prisma.fii.findMany();
   }
 
   findOne(id: number) {
@@ -24,7 +24,9 @@ export class FiiService {
     return `This action updates a #${id} fii`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} fii`;
+  remove(id: string) {
+    return this.prisma.fii.delete({
+      where:{id}
+    });
   }
 }
