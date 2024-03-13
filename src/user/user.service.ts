@@ -11,6 +11,19 @@ export class UserService {
     @InjectQueue('user') private userQueue: Queue
   ) { }
 
+  async addQueue(createUserDto: CreateUserDto) {
+
+    const { data } = await this.userQueue.add(createUserDto)
+    return data
+
+  }
+
+  @Process()
+  async consumerQueue(job: Job) {
+    await this.create(job.data)
+  }
+
+
   create(createUserDto: CreateUserDto) {
     return this.prisma.user.create({
       data: createUserDto
@@ -44,15 +57,5 @@ export class UserService {
     return this.prisma.user.deleteMany({})
   }
 
-  async addQueue(createUserDto: CreateUserDto) {
-
-    const { data } = await this.userQueue.add(createUserDto)
-    return data
-
-  }
-
-  @Process()
-  async consumerQueue(job: Job) {
-    await this.create(job.data)
-  }
+ 
 }
