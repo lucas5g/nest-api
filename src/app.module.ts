@@ -8,6 +8,7 @@ import { CacheModule, CacheInterceptor } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ManageModule } from './manage/manage.module';
 import { FiiModule } from './fii/fii.module';
+import { BullModule } from '@nestjs/bull'
 @Module({
   imports: [
     BookModule,
@@ -17,6 +18,13 @@ import { FiiModule } from './fii/fii.module';
     CacheModule.register(),
     ManageModule,
     FiiModule,
+    BullModule
+      .forRoot({
+        redis: {
+          host: 'localhost',
+          port: 6379
+        }
+      })
   ],
   controllers: [AppController],
   providers: [
@@ -26,4 +34,4 @@ import { FiiModule } from './fii/fii.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }
