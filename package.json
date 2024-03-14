@@ -22,7 +22,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "postinstall": "prisma generate",
-    "test:load":"npx autocannon http://localhost:3333/users"
+    "test:load": "npx autocannon http://localhost:3333/users"
   },
   "dependencies": {
     "@nestjs/bull": "^10.1.0",
@@ -32,6 +32,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^5.11.0",
+    "axios": "^1.6.7",
     "bull": "^4.12.2",
     "cache-manager": "^5.4.0",
     "class-transformer": "^0.5.1",

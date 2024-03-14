@@ -15,8 +15,7 @@ export function startCluster(callback: Function) {
     }
 
     cluster.on('exit', () => {
-      console.log('servidor caiu')
-      // cluster.fork()
+      cluster.fork()
     })
   }
   const runWorkerProcess = async () => {
