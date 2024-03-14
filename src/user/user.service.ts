@@ -1,8 +1,9 @@
 import { PrismaService } from '@/prisma/prisma.service';
 import { CreateUserDto } from '@/user/dto/create-user.dto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger, UnprocessableEntityException } from '@nestjs/common';
 import { InjectQueue, Processor, Process } from '@nestjs/bull'
 import { Queue, Job } from 'bull'
+import { randomInt } from 'node:crypto';
 @Injectable()
 @Processor('user')
 export class UserService {
@@ -11,7 +12,7 @@ export class UserService {
     @InjectQueue('user') private userQueue: Queue
   ) { }
 
-  async addQueue(createUserDto: CreateUserDto) {
+  async sendQueue(createUserDto: CreateUserDto) {
 
     const { data } = await this.userQueue.add(createUserDto)
     return data
@@ -20,6 +21,7 @@ export class UserService {
 
   @Process()
   async consumerQueue(job: Job) {
+    console.log(job.data)
     await this.create(job.data)
   }
 
@@ -32,6 +34,10 @@ export class UserService {
   }
 
   findAll() {
+    if (randomInt(50) > 40) {
+      throw new Error('erro ao buscar')
+      throw new UnprocessableEntityException('não pod buscar')
+    }
     return this.prisma.user.findMany({
       orderBy: {
         createdAt: 'desc'
@@ -42,7 +48,9 @@ export class UserService {
 
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    return this.prisma.user.findUniqueOrThrow({
+      where: { id }
+    });
   }
 
   // update(id: number, updateUserDto: UpdateUserDto) {
@@ -57,5 +65,5 @@ export class UserService {
     return this.prisma.user.deleteMany({})
   }
 
- 
+
 }

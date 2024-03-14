@@ -17,14 +17,16 @@ describe('UserService', () => {
     service = module.get<UserService>(UserService);
   });
 
+  
+
 
   it.only('find all', async () => {
 
     console.time()
     const creaties = []
 
-    for (let i = 0; i <= 50; i++) {
-      creaties.push(service.addQueue({name: new Date().toISOString().slice(17, 23)}))
+    for (let i = 0; i <= 11000; i++) {
+      creaties.push(service.sendQueue({name: new Date().toISOString().slice(17, 23)}))
       // creaties.push(service.create({ name: new Date().toISOString().slice(17, 23) }))
 
     }
