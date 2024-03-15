@@ -9,6 +9,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ManageModule } from './manage/manage.module';
 import { FiiModule } from './fii/fii.module';
 import { BullModule } from '@nestjs/bull'
+import { MessageModule } from './message/message.module';
 @Module({
   imports: [
     BookModule,
@@ -24,7 +25,8 @@ import { BullModule } from '@nestjs/bull'
           host: 'localhost',
           port: 6379
         }
-      })
+      }),
+    MessageModule
   ],
   controllers: [AppController],
   providers: [

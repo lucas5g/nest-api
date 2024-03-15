@@ -7,17 +7,17 @@ import { AppExceptionsFilter } from '@/app-exceptions.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    logger:['error', 'debug'],
+    logger: ['error', 'debug'],
 
   });
-  // app.useGlobalFilters(new AppExceptionsFilter());
-
   app.enableCors();
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
+      validateCustomDecorators: true
     }),
   );
+  // app.useGlobalFilters(new AppExceptionsFilter());
   // app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)))
 
   const port = 3333;
