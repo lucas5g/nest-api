@@ -5,10 +5,10 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class FiiService {
-  constructor(private prisma: PrismaService){}
+  constructor(private prisma: PrismaService) {}
   create(createFiiDto: CreateFiiDto) {
     return this.prisma.fii.create({
-      data: createFiiDto
+      data: createFiiDto,
     });
   }
 
@@ -21,12 +21,13 @@ export class FiiService {
   }
 
   update(id: number, updateFiiDto: UpdateFiiDto) {
+    console.log(updateFiiDto);
     return `This action updates a #${id} fii`;
   }
 
   remove(id: string) {
     return this.prisma.fii.delete({
-      where:{id}
+      where: { id },
     });
   }
 }

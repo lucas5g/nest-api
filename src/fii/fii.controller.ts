@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { FiiService } from './fii.service';
 import { CreateFiiDto } from './dto/create-fii.dto';
 import { UpdateFiiDto } from './dto/update-fii.dto';

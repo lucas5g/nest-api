@@ -1,3 +1,3 @@
 export class CreateFiiDto {
-  id: string
+  id: string;
 }

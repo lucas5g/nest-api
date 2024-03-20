@@ -1,30 +1,22 @@
-import { NestFactory, Reflector } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ClassSerializerInterceptor, Logger, ValidationPipe } from '@nestjs/common';
-import { startCluster } from '@/utils/start-cluster';
-import { randomInt } from 'node:crypto';
-import { AppExceptionsFilter } from '@/app-exceptions.filter';
+import { Logger, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'debug'],
-
   });
   app.enableCors();
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
-      validateCustomDecorators: true
+      validateCustomDecorators: true,
     }),
   );
-  // app.useGlobalFilters(new AppExceptionsFilter());
-  // app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)))
 
   const port = 3333;
   await app.listen(port);
-  Logger.debug('http://localhost:3333')
-
+  Logger.debug('http://localhost:3333');
 }
-bootstrap()
+bootstrap();
 // startCluster(bootstrap)
-

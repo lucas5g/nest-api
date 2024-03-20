@@ -5,6 +5,7 @@ import { UpdateMessageDto } from './dto/update-message.dto';
 @Injectable()
 export class MessageService {
   create(createMessageDto: CreateMessageDto) {
+    console.log(createMessageDto);
     return 'This action adds a new message';
   }
 
@@ -17,6 +18,7 @@ export class MessageService {
   }
 
   update(id: number, updateMessageDto: UpdateMessageDto) {
+    console.log(updateMessageDto);
     return `This action updates a #${id} message`;
   }
 
