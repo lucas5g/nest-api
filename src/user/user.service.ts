@@ -1,6 +1,6 @@
 import { PrismaService } from '@/prisma/prisma.service';
 import { CreateUserDto } from '@/user/dto/create-user.dto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectQueue, Processor, Process } from '@nestjs/bull';
 import { Queue, Job } from 'bull';
 @Injectable()
@@ -37,10 +37,14 @@ export class UserService {
     });
   }
 
-  findOne(id: number) {
-    return this.prisma.user.findUniqueOrThrow({
-      where: { id },
-    });
+  async findOne(id: number) {
+    return this.prisma.user
+      .findUniqueOrThrow({
+        where: { id },
+      })
+      .catch(() => {
+        throw new NotFoundException('User não registrado.');
+      });
   }
 
   // update(id: number, updateUserDto: UpdateUserDto) {
