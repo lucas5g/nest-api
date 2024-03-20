@@ -28,6 +28,8 @@ sshpass -p $PASSWORD ssh -t root@128.199.12.79 "\
   source ~/.nvm/nvm.sh &&\
   cd projects/nest-api &&\
   git pull &&\
-  npm run build
+  npm i &&\
+  npx prisma generate &&\
+  npm run build &&\
   pm2 restart nest-api --update-env
 "
