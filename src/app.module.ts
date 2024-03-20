@@ -6,7 +6,6 @@ import { WordModule } from './word/word.module';
 import { UserModule } from './user/user.module';
 import { CacheModule, CacheInterceptor } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { ManageModule } from './manage/manage.module';
 import { FiiModule } from './fii/fii.module';
 import { BullModule } from '@nestjs/bull';
 import { MessageModule } from './message/message.module';
@@ -17,7 +16,6 @@ import { MessageModule } from './message/message.module';
     WordModule,
     UserModule,
     CacheModule.register(),
-    ManageModule,
     FiiModule,
     BullModule.forRoot({
       redis: {

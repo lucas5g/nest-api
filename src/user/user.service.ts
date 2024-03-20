@@ -1,9 +1,8 @@
 import { PrismaService } from '@/prisma/prisma.service';
 import { CreateUserDto } from '@/user/dto/create-user.dto';
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectQueue, Processor, Process } from '@nestjs/bull';
 import { Queue, Job } from 'bull';
-import { randomInt } from 'node:crypto';
 @Injectable()
 @Processor('user')
 export class UserService {
@@ -30,10 +29,6 @@ export class UserService {
   }
 
   findAll() {
-    if (randomInt(50) > 40) {
-      throw new Error('erro ao buscar');
-      throw new UnprocessableEntityException('não pod buscar');
-    }
     return this.prisma.user.findMany({
       orderBy: {
         createdAt: 'desc',
