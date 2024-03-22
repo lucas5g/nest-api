@@ -2,6 +2,7 @@ import { PrismaService } from '@/prisma/prisma.service';
 import { UserService } from '@/user/user.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { BullModule } from '@nestjs/bull';
+import { setTimeout } from 'timers/promises';
 describe('UserService', () => {
   let service: UserService;
 
@@ -19,18 +20,21 @@ describe('UserService', () => {
   });
 
   it('find all', async () => {
-    // const creaties = [];
+    const creaties = [];
+    const count = 5000
 
-    // for (let i = 0; i <= 11000; i++) {
-    //   creaties.push(
-    //     service.sendQueue({ name: new Date().toISOString().slice(17, 23) }),
-    //   );
-    //   // creaties.push(service.create({ name: new Date().toISOString().slice(17, 23) }))
-    // }
+    for (let i = 0; i <= count; i++) {
+      creaties.push( service.sendQueue({ name: new Date().toISOString().slice(17, 23) }));
+      // creaties.push(service.create({ name: new Date().toISOString().slice(17, 23) }))
+    }
 
-    // const res = await Promise.all(creaties);
+    await Promise.allSettled(creaties);
 
-    const res = await service.findAll();
-    expect(res).toBe;
-  });
+    await setTimeout(count)
+
+    const users = await service.findAll()
+
+    console.log(users)
+
+  }, 7000);
 });

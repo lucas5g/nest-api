@@ -3,13 +3,14 @@ import { CreateUserDto } from '@/user/dto/create-user.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectQueue, Processor, Process } from '@nestjs/bull';
 import { Queue, Job } from 'bull';
+import { UpdateUserDto } from '@/user/dto/update-user.dto';
 @Injectable()
 @Processor('user')
 export class UserService {
   constructor(
     private prisma: PrismaService,
     @InjectQueue('user') private userQueue: Queue,
-  ) {}
+  ) { }
 
   async sendQueue(createUserDto: CreateUserDto) {
     const { data } = await this.userQueue.add(createUserDto);
@@ -20,6 +21,7 @@ export class UserService {
   async consumerQueue(job: Job) {
     console.log(job.data);
     await this.create(job.data);
+    //method async
   }
 
   create(createUserDto: CreateUserDto) {
@@ -42,14 +44,11 @@ export class UserService {
       .findUniqueOrThrow({
         where: { id },
       })
-      .catch(() => {
-        throw new NotFoundException('User não registrado.');
-      });
   }
 
-  // update(id: number, updateUserDto: UpdateUserDto) {
-  //   return `This action updates a #${id} user`;
-  // }
+  update(id: number, updateUserDto: UpdateUserDto) {
+    return `This action updates a #${id} user`;
+  }
 
   remove(id: number) {
     return `This action removes a #${id} user`;
