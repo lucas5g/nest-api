@@ -9,13 +9,26 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { FiiModule } from './fii/fii.module';
 import { BullModule } from '@nestjs/bull';
 import { MessageModule } from './message/message.module';
+import type { ClientOpts } from 'redis';
+import { redisStore } from 'cache-manager-redis-store';
+import { ScheduleModule } from '@nestjs/schedule';
+
+
 @Module({
   imports: [
     BookModule,
     PrismaModule,
     WordModule,
     UserModule,
-    CacheModule.register(),
+    ScheduleModule.forRoot(),
+    CacheModule.register({
+      isGlobal: true,
+      socket:{
+        host: 'locahost',
+        port: 6379
+      }
+   
+    }),
     FiiModule,
     BullModule.forRoot({
       redis: {
@@ -33,4 +46,4 @@ import { MessageModule } from './message/message.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }

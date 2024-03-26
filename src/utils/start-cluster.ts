@@ -8,7 +8,7 @@ export function startCluster(callback: any) {
 
     Logger.log(`Server start in process ${process.pid}`);
 
-    for (let i = 0; i < processCount; i++) {
+    for (let i = 0; i <= 4; i++) {
       cluster.fork();
     }
 

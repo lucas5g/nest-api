@@ -1,9 +1,20 @@
-import { io } from 'socket.io-client';
+const options = {
+  apiVersion: 'v1', // default
+  endpoint: 'http://10.100.64.175:8201', // default
+  token: '00000000-0000-0000-0000-000000000000' // optional client token; can be fetched after valid initialization of the server
+};
 
-const socket = io('http://localhost:3333');
+var vault = require("node-vault")(options);
 
-socket.emit('findAllMessage', (data: any) => console.log(data));
+// init vault server
+vault.init({ secret_shares: 1, secret_threshold: 1 })
+.then( (result) => {
+  var keys = result.keys;
+  // set token for all following requests
+  vault.token = result.root_token;
+  // unseal vault server
+  return vault.unseal({ secret_shares: 1, key: keys[0] })
+})
+.catch(console.error);
 
-// socket.emit('createMessage')
-// ''
-// socket.on('socket-error', data => console.log(data))
+vault.reade('/secret/hell', )
