@@ -31,6 +31,6 @@ describe('FiiService', () => {
   it('find all', async () => {
     const res = await service.findAll();
 
-    expect(res).toBe
+    expect(res).toBe;
   });
 });
