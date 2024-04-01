@@ -3,15 +3,14 @@ import { Controller, Delete, Get } from '@nestjs/common';
 
 @Controller('messages')
 export class MessageController {
-  constructor(private messageService:MessageService){}
+  constructor(private messageService: MessageService) {}
   @Get()
-  findAll(){
-    return this.messageService.findAll()
+  findAll() {
+    return this.messageService.findAll();
   }
 
   @Delete()
-  remove(){
-    return this.messageService.remove(12)
+  remove() {
+    return this.messageService.remove(12);
   }
-
 }

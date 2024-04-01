@@ -1,6 +1,6 @@
 import { PrismaService } from '@/prisma/prisma.service';
 import { CreateUserDto } from '@/user/dto/create-user.dto';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectQueue, Processor, Process } from '@nestjs/bull';
 import { Queue, Job } from 'bull';
 import { UpdateUserDto } from '@/user/dto/update-user.dto';
@@ -10,7 +10,7 @@ export class UserService {
   constructor(
     private prisma: PrismaService,
     @InjectQueue('user') private userQueue: Queue,
-  ) { }
+  ) {}
 
   async sendQueue(createUserDto: CreateUserDto) {
     const { data } = await this.userQueue.add(createUserDto);
@@ -40,13 +40,13 @@ export class UserService {
   }
 
   async findOne(id: number) {
-    return this.prisma.user
-      .findUniqueOrThrow({
-        where: { id },
-      })
+    return this.prisma.user.findUniqueOrThrow({
+      where: { id },
+    });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
+    console.log(updateUserDto);
     return `This action updates a #${id} user`;
   }
 

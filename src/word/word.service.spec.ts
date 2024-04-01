@@ -24,10 +24,10 @@ describe('WordService', () => {
     service = module.get<WordService>(WordService);
 
     const data: CreateWordDto = {
-      bookId: 2,
+      bookId: 1,
       fixed: false,
       meaning: 'test meaning',
-      name: 'test-word',
+      name: 'test-word-1',
     };
 
     const word = await service.create(data);

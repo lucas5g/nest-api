@@ -11,8 +11,8 @@ import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
 export class MessageService {
   constructor(
     // @InjectQueue('message') private messageQueue: Queue,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache
-  ) { }
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
   create(createMessageDto: CreateMessageDto) {
     console.log(createMessageDto);
     return 'This action adds a new message';
@@ -33,20 +33,11 @@ export class MessageService {
 
   @Cron('45 28 16 * * *', { name: 'message-remove' })
   async remove(id: number) {
-    await setTimeout(1000)
+    await setTimeout(1000);
 
-    const updateExist =  await this.cacheManager.set('removeMessage', true, 10_000)
+    await this.cacheManager.set('removeMessage', true, 10_000);
 
-
-    console.log({updateExist})
-    if (updateExist) {
-      return
-    }
-
-    await this.cacheManager.set('removeMessage', true, 10_000)
-
-    console.log('remove')
+    console.log('remove');
     return `This action removes a #${id} message`;
-
   }
 }

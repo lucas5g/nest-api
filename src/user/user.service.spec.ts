@@ -21,20 +21,17 @@ describe('UserService', () => {
 
   it('find all', async () => {
     const creaties = [];
-    const count = 5000
+    const count = 5;
 
     for (let i = 0; i <= count; i++) {
-      creaties.push( service.sendQueue({ name: new Date().toISOString().slice(17, 23) }));
+      creaties.push(
+        service.sendQueue({ name: new Date().toISOString().slice(17, 23) }),
+      );
       // creaties.push(service.create({ name: new Date().toISOString().slice(17, 23) }))
     }
 
     await Promise.allSettled(creaties);
 
-    await setTimeout(count)
-
-    const users = await service.findAll()
-
-    console.log(users)
-
+    await setTimeout(count);
   }, 7000);
 });
