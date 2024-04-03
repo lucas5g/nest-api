@@ -6,14 +6,14 @@ import {
 import { MessageService } from './message.service';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { UpdateMessageDto } from './dto/update-message.dto';
-import { BadRequestException, UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
+import { UseFilters } from '@nestjs/common';
 import { AppExceptionsFilter } from '@/app-exceptions.filter';
 
 @WebSocketGateway()
 @UseFilters(new AppExceptionsFilter())
 // @UsePipes(new ValidationPipe())
 export class MessageGateway {
-  constructor(private readonly messageService: MessageService) { }
+  constructor(private readonly messageService: MessageService) {}
 
   @SubscribeMessage('createMessage')
   async create(@MessageBody() createMessageDto: CreateMessageDto) {

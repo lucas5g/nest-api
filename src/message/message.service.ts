@@ -3,7 +3,6 @@ import { CreateMessageDto } from './dto/create-message.dto';
 import { UpdateMessageDto } from './dto/update-message.dto';
 import { Cron } from '@nestjs/schedule';
 
-import { setTimeout } from 'timers/promises';
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
 
 @Injectable()
@@ -14,7 +13,7 @@ export class MessageService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
   create(createMessageDto: CreateMessageDto) {
-    console.log({createMessageDto});
+    console.log({ createMessageDto });
     return 'This action adds a new message';
   }
 
@@ -33,12 +32,11 @@ export class MessageService {
 
   @Cron('32 55 11 * * *', { name: 'message-remove' })
   async remove(id: number) {
-
-    console.log(process.env.CLUSTER_ID)
-    console.log(process.pid)
+    console.log(process.env.CLUSTER_ID);
+    console.log(process.pid);
     await this.cacheManager.set('removeMessage', true, 10_000);
 
-    console.log(await this.cacheManager.get('removeMessage'))
+    console.log(await this.cacheManager.get('removeMessage'));
 
     console.log('remove');
     return `This action removes a #${id} message`;

@@ -11,7 +11,7 @@ import { BullModule } from '@nestjs/bull';
 import { MessageModule } from './message/message.module';
 import { ScheduleModule } from '@nestjs/schedule';
 
-console.log(process.pid)
+console.log(process.pid);
 
 @Module({
   imports: [
