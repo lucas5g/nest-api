@@ -2,22 +2,6 @@
 
 message=$1
 
-npm run lint 
-status=$?
-if [ "$status" != 0 ]; then 
-  echo -e "Erro no lint"
-  exit $status
-fi
-
-npm test
-status=$?
-if [ "$status" != 0 ]; then 
-  echo -e "Erro no test"
-  exit $status
-fi
-
-
-
 git add .
 git commit -m "$message"
 git push

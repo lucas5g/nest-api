@@ -14,7 +14,7 @@ export class MessageService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
   create(createMessageDto: CreateMessageDto) {
-    console.log(createMessageDto);
+    console.log({createMessageDto});
     return 'This action adds a new message';
   }
 
@@ -31,11 +31,14 @@ export class MessageService {
     return `This action updates a #${id} message`;
   }
 
-  @Cron('45 28 16 * * *', { name: 'message-remove' })
+  @Cron('32 55 11 * * *', { name: 'message-remove' })
   async remove(id: number) {
-    await setTimeout(1000);
 
+    console.log(process.env.CLUSTER_ID)
+    console.log(process.pid)
     await this.cacheManager.set('removeMessage', true, 10_000);
+
+    console.log(await this.cacheManager.get('removeMessage'))
 
     console.log('remove');
     return `This action removes a #${id} message`;

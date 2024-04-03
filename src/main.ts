@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import { startCluster } from '@/utils/start-cluster';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

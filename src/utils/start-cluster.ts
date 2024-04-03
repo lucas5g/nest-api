@@ -4,9 +4,9 @@ import os from 'os';
 
 export function startCluster(callback: any) {
   const runPrimaryProcess = () => {
-    const processCount = os.availableParallelism();
+    const processCount = 4 ?? os.availableParallelism();
 
-    Logger.log(`Server start in process ${process.pid}`);
+    Logger.debug(`Server start in process ${process.pid}`);
 
     for (let i = 0; i <= processCount; i++) {
       cluster.fork();
