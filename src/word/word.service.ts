@@ -33,7 +33,9 @@ export class WordService {
       },
     };
 
-    const [count, words] = await this.prisma.$transaction([
+    const skip = 0;
+
+    const [count, words] = await Promise.all([
       this.prisma.word.count({ where }),
       this.prisma.word.findMany({
         where,
@@ -43,6 +45,12 @@ export class WordService {
         take: 100,
       }),
     ]);
+
+    if (skip > count) {
+      throw new BadRequestException(
+        'O skip é maior que a quantidade de palavras',
+      );
+    }
 
     return { count, words };
   }
